@@ -283,10 +283,12 @@ const styles = [
   }
 ];
 
+const publishedProject = window.CHENO_PUBLISHED_PROJECT || {};
+
 const state = {
   lang: "zh",
-  styleId: "quiet",
-  images: [],
+  styleId: publishedProject.styleId || "quiet",
+  images: Array.isArray(publishedProject.images) ? publishedProject.images : [],
   activeImage: 0,
   ownerMode: new URLSearchParams(window.location.search).get("owner") === "1",
   typewriterTimer: null,
@@ -304,6 +306,13 @@ const fields = {
   material: $("#material"),
   audience: $("#audience")
 };
+
+function applyPublishedProject() {
+  fields.projectName.value = publishedProject.name || fields.projectName.value;
+  fields.projectLocation.value = publishedProject.location || fields.projectLocation.value;
+  fields.material.value = publishedProject.material || fields.material.value;
+  fields.audience.value = publishedProject.audience || fields.audience.value;
+}
 
 function currentStyle() {
   return styles.find((style) => style.id === state.styleId) || styles[0];
@@ -703,5 +712,6 @@ function bindEvents() {
 renderStyles();
 applyOwnerMode();
 bindEvents();
+applyPublishedProject();
 applyLanguage("zh");
 generateCopy();
