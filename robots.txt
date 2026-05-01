@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://bigdipper1024.github.io/cheno-cabinet/sitemap.xml
